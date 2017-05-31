@@ -41,7 +41,7 @@ t.ExecutionMode = 'fixedrate';
 
 t.TasksToExecute = 1;        % 如果不对冲，则值运行一次
 
-%% Start/Stop tesr
+%% Start/Stop 
 start(t);
 %pause(3600*3);
 %{
