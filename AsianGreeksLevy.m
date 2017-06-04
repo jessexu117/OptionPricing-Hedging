@@ -2,17 +2,18 @@ function [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
     = AsianGreeksLevy(AssetPrice,Strike,Sigma,Rates,Settle,ExerciseDates)
 %% function to caculate the Greeks of Asian options
 % in the file, a Levy model is used
+
 % Create RateSpec from the interest rate term structure
 StartDates = '12-March-2014';
 EndDates = '12-March-2020';
 %Rates = 0.0405;   
 Compounding = -1;
 Basis = 1;
-
 RateSpec = intenvset('ValuationDate', StartDates, 'StartDates', StartDates, ...
     'EndDates', EndDates, 'Rates', Rates, 'Compounding', ...
     Compounding, 'Basis', Basis);
 
+% Create StockSpec woth Sigma(volatility) and spot price of underlying asset
 StockSpec = stockspec(Sigma, AssetPrice);
                                 
 OptSpec = 'call';                
