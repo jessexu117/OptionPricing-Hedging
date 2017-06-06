@@ -1,5 +1,5 @@
 function [ AmeCallPrice,AmePutPrice,ErouCallPrice,ErouPutPrice,Prob ] = CRRPrice( Price,Strike,Rate,Time,Volatility,Yield,Step )
-%% ÀûÓÃ¶ş²æÊ÷ÆÚÈ¨¶¨¼ÛÄ£ĞÍ¶ÔÅ·Ê½ºÍÃÀÊ½ÆÚÈ¨¶¨¼Û
+%% åˆ©ç”¨äºŒå‰æ ‘æœŸæƒå®šä»·æ¨¡å‹å¯¹æ¬§å¼å’Œç¾å¼æœŸæƒå®šä»·
 if nargin == 5
     Step = 1000;
     Yield = 0;
@@ -44,7 +44,7 @@ for i = 1:n+1           % option price when expired(j=n+1)
     CallEfx(i,n+1) = callfx(i,n+1);
     PutEfx(i,n+1)  = putfx(i,n+1);
 end
-for jj = 1:n            % derive option prices when j=n-1,n-2,¡­,1
+for jj = 1:n            % derive option prices when j=n-1,n-2,â€¦,1
     j = n+1-jj;
     for i = 1:j
         CallEfx(i,j) = exp(-r*dt)*(p*CallEfx(i,j+1)+(1-p)*CallEfx(i+1,j+1));
