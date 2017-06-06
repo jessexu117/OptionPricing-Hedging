@@ -1,4 +1,4 @@
-function [ AmeCallPrice,AmePutPrice,ErouCallPrice,ErouPutPrice,Prob ] = CRRPrice( Price,Strike,Rate,Time,Volatility,Yield,Step )
+function [ AmeCallPrice, AmePutPrice, ErouCallPrice, ErouPutPrice, Prob ] = CRRPrice( Price, Strike, Rate, Time, Volatility, Yield, Step )
 %% 利用二叉树期权定价模型对欧式和美式期权定价
 if nargin == 5
     Step = 1000;
