@@ -1,5 +1,5 @@
 function [ Call,pCall,Put,pPut ] = BinPrice( Price,pCStrike,pPStrike,pCash,Rate,Volatility,Time,Yield )
-% 二元期权定价
+% 浜屽厓鏈熸潈瀹氫环
 if nargin == 7
     Yield = 0;
 end
