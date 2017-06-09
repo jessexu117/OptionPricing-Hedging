@@ -8,5 +8,3 @@ Vega                  = blsvega(Price, Strike, Rate, Time, Volatility, Yield);
 [CallRho, PutRho]     = blsrho(Price, Strike, Rate, Time, Volatility, Yield);
 
 end
-
-
