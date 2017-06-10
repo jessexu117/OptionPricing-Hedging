@@ -9,6 +9,7 @@ if ~isconnected(w)
     msgbox('Wind Disconnected!') 
 end
 
+%%
 myToday     = datestr(today,'yyyy-mm-dd');
 HV30Data    = GetHV30(Code);
 AverageHV30 = mean(HV30Data);         % Average HV30 of last 3 years
@@ -21,10 +22,10 @@ else
     AverageHisHV30 = AverageHV30;
 end
 
-% Our real estimated volatility
+%% Our real estimated volatility
 EstVol  = 1/3*AverageHV30+1/3*LatestHV30+1/3*AverageHisHV30;
 
-% Volatility we wanna sell
+%% Volatility we wanna sell
 SellVol = 1/3*AverageHV30+1/3*max(AverageHV30,AverageHisHV30)+1/3*max(AverageHV30,LatestHV30);
 BuyVol  = 1/3*AverageHV30+1/3*min(AverageHV30,AverageHisHV30)+1/3*min(AverageHV30,LatestHV30);
 
@@ -39,5 +40,5 @@ fit_model  = estimate(model,retSeries,'Variance0',{'Constant0',0.00001},'Display
 [E0,V0]    = infer(fit_model,retSeries);
 [~,~,V]    = forecast(fit_model,21,'Y0',retSeries,'E0',E0,'V0',V0);     % Forcast 20 steps
 GarchVol   = sqrt(V(1))*sqrt(242);
-% GarchVol = 0.18;
+
 end
