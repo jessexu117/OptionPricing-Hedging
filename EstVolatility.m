@@ -1,5 +1,5 @@
 function [ EstVol,GarchVol,SellVol,BuyVol ] = EstVolatility( Code )
-% 根据传入的标的期货代码，根据历史均值方法和GARCH模型方法估计其波动率
+% 鏍规嵁浼犲叆鐨勬爣鐨勬湡璐т唬鐮侊紝鏍规嵁鍘嗗彶鍧囧�兼柟娉曞拰GARCH妯″瀷鏂规硶浼拌鍏舵尝鍔ㄧ巼
 %% Estimate historical volatility with HV30 data
 answer = who('w');
 if(isempty(answer) || ~isa(w,'windMATLAB'))
