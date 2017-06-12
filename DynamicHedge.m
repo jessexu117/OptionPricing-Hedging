@@ -26,17 +26,17 @@ SettlePrice = ud.settleprice;
 N = length(Code);
 
 for i=1:N
-    %% (¼ÓËÙ)Ô¤¼ÓÔØÊı¾İ
+    %% (åŠ é€Ÿ)é¢„åŠ è½½æ•°æ®
     Time = (datenum(ExerciseDates(i))-datenum(today))/365;
-    fprintf('µÚ%d¸öÆÚÈ¨£º\n',int8(i));
-    Price = w.wsq(char(Code(i)),'rt_last');   % ÆÚ»õ×îĞÂ¼Û¸ñ
-    Rate  = w.wsq('CGB1Y.WI','rt_last')/100;  % Ò»ÄêÆÚ¹úÕ®ÊÕÒæÂÊ
+    fprintf('ç¬¬%dä¸ªæœŸæƒï¼š\n',int8(i));
+    Price = w.wsq(char(Code(i)),'rt_last');   % æœŸè´§æœ€æ–°ä»·æ ¼
+    Rate  = w.wsq('CGB1Y.WI','rt_last')/100;  % ä¸€å¹´æœŸå›½å€ºæ”¶ç›Šç‡
     if ~exist('rtWindMat.mat','file')
         rtWind = zeros(10,2);
         save rtWindMat rtWind;
     end
     if isnan(Price) || isnan(Rate)
-        fprintf('WindAPIÊµÊ±Êı¾İÒì³££¡Èç¹û¶à´ÎÌáĞÑ´ËÏûÏ¢£¬Çë¼ì²é£¡')
+        fprintf('WindAPIå®æ—¶æ•°æ®å¼‚å¸¸ï¼å¦‚æœå¤šæ¬¡æé†’æ­¤æ¶ˆæ¯ï¼Œè¯·æ£€æŸ¥ï¼')
         Price = rtWind(i,1);
         Rate = rtWind(i,2);
     else
@@ -46,7 +46,7 @@ for i=1:N
         save rtWindMat rtWind;
     end
 %    [EstVol,GarchVol,SellVol,BuyVol] = EstVolatility(char(Code(i)));   
-% %   µ÷ÊÔ×¨ÓÃ    
+% %   è°ƒè¯•ä¸“ç”¨    
      EstVol = 0.16;
      GarchVol = 0.16;
      SellVol = 0.18;
@@ -55,20 +55,20 @@ for i=1:N
     PremiumVol = 0.26;
     DiscountVol = (2-Premium(i))*min(GarchVol,BuyVol);
 
-    fprintf('ÀúÊ·¾ùÖµ¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',EstVol);
-    fprintf('GARCHÄ£ĞÍ¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',GarchVol);
+    fprintf('å†å²å‡å€¼ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',EstVol);
+    fprintf('GARCHæ¨¡å‹ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',GarchVol);
 
     if strcmp(char(Side(i)),'sellcall') || strcmp(char(Side(i)),'sellput')
-        fprintf('Âô³öÆÚÈ¨Ëù¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',SellVol);
-        fprintf('Âô³öÆÚÈ¨Ê±¶¨¼ÛËùÊ¹ÓÃ²¨¶¯ÂÊÎª %f\n\n',PremiumVol);
+        fprintf('å–å‡ºæœŸæƒæ‰€ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',SellVol);
+        fprintf('å–å‡ºæœŸæƒæ—¶å®šä»·æ‰€ä½¿ç”¨æ³¢åŠ¨ç‡ä¸º %f\n\n',PremiumVol);
         Volatility = PremiumVol;
     elseif strcmp(char(Side(i)),'buycall') || strcmp(char(Side(i)),'buyput')
-        fprintf('ÂòÈëÆÚÈ¨Ëù¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',BuyVol);
-        fprintf('ÂòÈëÆÚÈ¨Ê±¶¨¼ÛËùÊ¹ÓÃ²¨¶¯ÂÊÎª %f\n\n',DiscountVol);
+        fprintf('ä¹°å…¥æœŸæƒæ‰€ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',BuyVol);
+        fprintf('ä¹°å…¥æœŸæƒæ—¶å®šä»·æ‰€ä½¿ç”¨æ³¢åŠ¨ç‡ä¸º %f\n\n',DiscountVol);
         Volatility = DiscountVol;
     end
 
-    %% Âß¼­ÅĞ¶Ï    
+    %% é€»è¾‘åˆ¤æ–­    
     if Type(i) == 1
         [CallPrice,PutPrice] = blsprice(Price,Strike(i),Rate,Time,Volatility,Yield(i));
         if strcmp(char(Side(i)),'buycall') || strcmp(char(Side(i)),'sellcall')
@@ -76,7 +76,7 @@ for i=1:N
         elseif strcmp(char(Side(i)),'buyput') || strcmp(char(Side(i)),'sellput')
             OurPrice = PutPrice;
         end
-        fprintf('ÎÒÃÇ¶Ô¸ÃÅ·Ê½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',OurPrice);
+        fprintf('æˆ‘ä»¬å¯¹è¯¥æ¬§å¼æœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',OurPrice);
 
         [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
         = BS_GreekLetters(Price,Strike(i),Rate,Time,EstVol,Yield(i));
@@ -88,7 +88,7 @@ for i=1:N
         elseif strcmp(char(Side(i)),'buyput') || strcmp(char(Side(i)),'sellput')
             OurPrice = AmePutPrice;
         end
-        fprintf('ÎÒÃÇ¶Ô¸ÃÃÀÊ½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f£¬Prob = %f\n',OurPrice,Prob);
+        fprintf('æˆ‘ä»¬å¯¹è¯¥ç¾å¼æœŸæƒçš„å®šä»·ä¸ºï¼š%fï¼ŒProb = %f\n',OurPrice,Prob);
 
         [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
         = BS_GreekLetters(Price,Strike(i),Rate,Time,EstVol,Yield(i));
@@ -99,8 +99,8 @@ for i=1:N
         elseif strcmp(char(Side(i)),'buyput') || strcmp(char(Side(i)),'sellput')
             [AsianPrice,Var,UP] = Asian_improve(Price,Strike(i),Rate,Time,Volatility,0);
         end
-        fprintf('ÎÒÃÇ¶Ô¸ÃÑÇÊ½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',AsianPrice);
-        fprintf('ÑÇÊ½ÆÚÈ¨¼Û¸ñµÄ·½²îÎª %f  0.95ÖÃĞÅÇø¼äµÄÆÚÈ¨¼Û¸ñÉÏÏÂ½çÎª[%f, %f]\n ',Var,UP);
+        fprintf('æˆ‘ä»¬å¯¹è¯¥äºšå¼æœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',AsianPrice);
+        fprintf('äºšå¼æœŸæƒä»·æ ¼çš„æ–¹å·®ä¸º %f  0.95ç½®ä¿¡åŒºé—´çš„æœŸæƒä»·æ ¼ä¸Šä¸‹ç•Œä¸º[%f, %f]\n ',Var,UP);
 
         [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
         = AsianGreeksLevy(Price,Strike(i),EstVol,Rate,char(Settle(i)),char(ExerciseDates(i)));
@@ -114,14 +114,14 @@ for i=1:N
             OurPrice = BinPut;
             pS = pPut;
         end
-        fprintf('ÎÒÃÇ¶Ô¸Ã¶şÔªÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',OurPrice);
-        fprintf('ÆÚÈ¨¼Û¸ñ/±êµÄ¼Û¸ñ = %f\n',pS);
+        fprintf('æˆ‘ä»¬å¯¹è¯¥äºŒå…ƒæœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',OurPrice);
+        fprintf('æœŸæƒä»·æ ¼/æ ‡çš„ä»·æ ¼ = %f\n',pS);
     
         [CallDelta,PutDelta,CallGamma,PutGamma,CallTheta,PutTheta,CallVega,PutVega,CallRho,PutRho] = ...
          Bin_GreekLetters( Price,pCStrike(i),pPStrike(i),Rate,pCash(i),EstVol,SettlePrice(i),char(ExerciseDates(i)),Yield(i));
     
     else
-        error('ÆÚÈ¨ÀàĞÍÊäÈë´íÎó£¡');
+        error('æœŸæƒç±»å‹è¾“å…¥é”™è¯¯ï¼');
     end
     if Type(i) ~= 4 
         if strcmp(char(Side(i)),'sellput') 
@@ -149,7 +149,7 @@ for i=1:N
             fprintf('Vega: %f\n',-Vega);
             fprintf('CallRho: %f\n',-CallRho);
         else
-            error('½»Ò×·½ÏòÊäÈë´íÎó£¡');
+            error('äº¤æ˜“æ–¹å‘è¾“å…¥é”™è¯¯ï¼');
         end
     else 
         if strcmp(char(Side(i)),'sellput') 
@@ -177,7 +177,7 @@ for i=1:N
             fprintf('CallVega: %f\n',-CallVega);
             fprintf('CallRho: %f\n',-CallRho);
         else
-            error('½»Ò×·½ÏòÊäÈë´íÎó£¡');
+            error('äº¤æ˜“æ–¹å‘è¾“å…¥é”™è¯¯ï¼');
         end
     end
     fprintf('\n\n');
@@ -191,21 +191,21 @@ for i=1:N
             InitD(i,1) = CallDelta;
             InitD(i,2) = PutDelta;
             save InitDelta InitD;
-           %% ³õÊ¼¶Ô³å
+           %% åˆå§‹å¯¹å†²
             if strcmp(char(Side(i)),'sellcall')
-                info = ['µÚ',num2str(i),'¸öÆÚÈ¨£º³õÊ¼¶Ô³åÏÈÂòÈë',num2str(abs(Volume(i)*CallDelta)),'·İ±êµÄ×Ê²ú'];
+                info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šåˆå§‹å¯¹å†²å…ˆä¹°å…¥',num2str(abs(Volume(i)*CallDelta)),'ä»½æ ‡çš„èµ„äº§'];
                 msgbox(info,'INFO');
             elseif strcmp(char(Side(i)),'sellput')
-                info = ['µÚ',num2str(i),'¸öÆÚÈ¨£º³õÊ¼¶Ô³åÏÈÂô³ö',num2str(abs(Volume(i)*PutDelta)),'·İ±êµÄ×Ê²ú'];
+                info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šåˆå§‹å¯¹å†²å…ˆå–å‡º',num2str(abs(Volume(i)*PutDelta)),'ä»½æ ‡çš„èµ„äº§'];
                 msgbox(info,'INFO');
             elseif strcmp(char(Side(i)),'buyput')
-                info = ['µÚ',num2str(i),'¸öÆÚÈ¨£º³õÊ¼¶Ô³åÏÈÂòÈë',num2str(abs(Volume(i)*PutDelta)),'·İ±êµÄ×Ê²ú'];
+                info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šåˆå§‹å¯¹å†²å…ˆä¹°å…¥',num2str(abs(Volume(i)*PutDelta)),'ä»½æ ‡çš„èµ„äº§'];
                 msgbox(info,'INFO');
             elseif strcmp(char(Side(i)),'buycall')
-                info = ['µÚ',num2str(i),'¸öÆÚÈ¨£º³õÊ¼¶Ô³åÏÈÂô³ö',num2str(abs(Volume(i)*CallDelta)),'·İ±êµÄ×Ê²ú'];
+                info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šåˆå§‹å¯¹å†²å…ˆå–å‡º',num2str(abs(Volume(i)*CallDelta)),'ä»½æ ‡çš„èµ„äº§'];
                 msgbox(info,'INFO');
             else
-                error('ÂòÂô·½ÏòÊäÈë´íÎó£¡');
+                error('ä¹°å–æ–¹å‘è¾“å…¥é”™è¯¯ï¼');
             end
         else
             CallDeltaChange = abs(CallDelta) - abs(InitD(i,1));
@@ -213,115 +213,115 @@ for i=1:N
             lastweek = 0;
             lastday  = 0;
             if (datenum(ExerciseDates(i)) - datenum(today)) <= 1
-                disp('´ËÆÚÈ¨Ã÷Ìì¼´½«µ½ÆÚ£¡\n')
+                disp('æ­¤æœŸæƒæ˜å¤©å³å°†åˆ°æœŸï¼\n')
                 lastday = 1;
             elseif (datenum(ExerciseDates(i)) - datenum(today)) <= 7
-                disp('´ËÆÚÈ¨Ò»ÖÜÖ®ÄÚ¼´½«µ½ÆÚ£¡\n')
+                disp('æ­¤æœŸæƒä¸€å‘¨ä¹‹å†…å³å°†åˆ°æœŸï¼\n')
                 lastweek = 1;
             end
             
             switch(char(Side(i)))
                 case 'sellcall'
                     if lastweek == 1 && CallDeltaChange > lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 1 && CallDeltaChange < -lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastday == 1 && CallDeltaChange > lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastday == 1 && CallDeltaChange < -lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 0 && lastday == 0 && CallDeltaChange > ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 0 && lastday == 0 && CallDeltaChange < -ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     end
                 case 'sellput'
                     if lastweek == 1 && PutDeltaChange > lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 1 && PutDeltaChange < -lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastday == 1 && PutDeltaChange > lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastday == 1 && PutDeltaChange < -lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 0 && lastday == 0 && PutDeltaChange > ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 0 && lastday == 0 && PutDeltaChange < -ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     end
                 case 'buycall'
                     if lastweek == 1 && CallDeltaChange > lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 1 && CallDeltaChange < -lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastday == 1 && CallDeltaChange > lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastday == 1 && CallDeltaChange < -lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 0 && lastday == 0 && CallDeltaChange > ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     elseif lastweek == 0 && lastday == 0 && CallDeltaChange < -ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(CallDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(CallDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,1) = CallDelta;
                     end
                 case 'buyput'
                     if lastweek == 1 && PutDeltaChange > lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 1 && PutDeltaChange < -lstweekDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastday == 1 && PutDeltaChange > lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastday == 1 && PutDeltaChange < -lstdayDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 0 && lastday == 0 && PutDeltaChange > ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂòÈë',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šä¹°å…¥',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     elseif lastweek == 0 && lastday == 0 && PutDeltaChange < -ordinaryDelta(i)
-                        info = ['µÚ',num2str(i),'¸öÆÚÈ¨£ºÂô³ö',num2str(abs(PutDeltaChange*Volume(i))),'·İ±êµÄ×Ê²ú'];
+                        info = ['ç¬¬',num2str(i),'ä¸ªæœŸæƒï¼šå–å‡º',num2str(abs(PutDeltaChange*Volume(i))),'ä»½æ ‡çš„èµ„äº§'];
                         msgbox(info,'info');
                         InitD(i,2) = PutDelta;
                     end
