@@ -45,14 +45,14 @@ for i=1:N
         rtWind(i,2) = Rate;
         save rtWindMat rtWind;
     end
-%    [EstVol,GarchVol,SellVol,BuyVol] = EstVolatility(char(Code(i)));   
-% %   调试专用    
-     EstVol = 0.16;
-     GarchVol = 0.16;
-     SellVol = 0.18;
-     BuyVol = 0.18;   
-    %PremiumVol  = Premium(i)*max(GarchVol,SellVol);
-    PremiumVol = 0.26;
+    [EstVol,GarchVol,SellVol,BuyVol] = EstVolatility(char(Code(i)));   
+    %%调试专用    
+    %  EstVol = 0.16;
+    %  GarchVol = 0.16;
+    %  SellVol = 0.18;
+    %  BuyVol = 0.18;   
+    PremiumVol  = Premium(i)*max(GarchVol,SellVol);
+    % PremiumVol = 0.26;
     DiscountVol = (2-Premium(i))*min(GarchVol,BuyVol);
 
     fprintf('历史均值估计的波动率为 %f\n',EstVol);
