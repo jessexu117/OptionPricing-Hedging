@@ -39,7 +39,7 @@ t.TimerFcn = @DynamicHedge;
 t.Period   = 300;             % 执行任务间隔时间
 t.ExecutionMode = 'fixedrate';  
 
-%t.TasksToExecute = 1;        % 如果不对冲，则值运行一次
+t.TasksToExecute = 1;        % 如果不对冲，则值运行一次
 
 %% Start/Stop
 start(t);
