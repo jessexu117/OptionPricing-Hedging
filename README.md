@@ -1,13 +1,20 @@
 # OptionPricing-Hedging
-###### @author: Jesse Xu
-###### @email: jessexu117@outlook.com
+###### @author: Jinjie (Jesse) Xu
 
-###### Written with MATLAB
-###### Data is from Wind Quant API
-###### Real-time Pricing and Hedging with real-time data from Wind
-###### Usually designed for OTC Pricing and Hedging
+###### @email: jinjie.xu@whu.edu.cn
 
-### Option Pricing: 
+The open-source project is the very beginning version.
+
+######This toolbox was developed for options OTC business, and could be divided into three module: pricing, hedging and volatility estimation.
+
+######Pricing module supports vanilla options (European, American) and exotic options (Asian, binary, etc.). Hedging module could monitor the Greeks of given options (Delta, Gamma, etc.), and push hedging notification with info of hedging parameter.
+
+######Volatility Estimation module gets real-time/asynchronous data stream from Wind Quant API, and reckon implied/realized volatility based on GARCH model and statistical analysis method.
+
+######The toolbox is frequently used now, and get continuously improved and optimized.
+
+### Option Pricing:
+
 1. European Option: BS model
 2. American Option: CRR model (Binomial Tree option pricing model)
 3. Asian Option: Levy Model
