@@ -7,23 +7,23 @@ Code    = 'M1709.DCE';  % Code of underlying asset
 Side    = 'sellcall'; % Side: sellcall,sellput,buycall,buyput
 Strike  = 2712;      % Strike price
 Type    = 4;         % Type of option   European:1  American:2  Asian:3  Binary:4
-Premium = 1.1;       % ÆÚÈ¨¶¨¼ÛÊ±²¨¶¯ÂÊµÄÒç¼Û·ù¶È
+Premium = 1.1;       % æœŸæƒå®šä»·æ—¶æ³¢åŠ¨ç‡çš„æº¢ä»·å¹…åº¦
 Yield   = 0;
 %% parameter of binary option
-pCStrike    = 0.95;   % Call Strike±ä¶¯·ù¶È
-pPStrike    = 1.05;   % Put Strike±ä¶¯·ù¶È
-pCash       = 0.05;   % Ö§¸¶¶îÕ¼ÏÖ¼ÛµÄ±ÈÂÊ
-SettlePrice = 6888;   %¶şÔªÆÚÈ¨Ç©Ô¼Ê±µÄ±êµÄ¼Û¸ñ
-%% ÑÇÊ½ÆÚÈ¨
-Settle = '2017-5-24';        % Ç©Ô¼ÈÕÆÚ
-ExerciseDates = '2017-8-24'; % ĞĞÈ¨ÈÕÆÚ
+pCStrike    = 0.95;   % Call Strikeå˜åŠ¨å¹…åº¦
+pPStrike    = 1.05;   % Put Strikeå˜åŠ¨å¹…åº¦
+pCash       = 0.05;   % æ”¯ä»˜é¢å ç°ä»·çš„æ¯”ç‡
+SettlePrice = 6888;   %äºŒå…ƒæœŸæƒç­¾çº¦æ—¶çš„æ ‡çš„ä»·æ ¼
+%% äºšå¼æœŸæƒ
+Settle = '2017-5-24';        % ç­¾çº¦æ—¥æœŸ
+ExerciseDates = '2017-8-24'; % è¡Œæƒæ—¥æœŸ
 
 Time = (datenum(ExerciseDates)-datenum(today))/365;
 
-%% (¼ÓËÙ)Ô¤¼ÓÔØÊı¾İ
-%Price = w.wsq(Code,'rt_last');   % ÆÚ»õ×îĞÂ¼Û¸ñ
+%% (åŠ é€Ÿ)é¢„åŠ è½½æ•°æ®
+%Price = w.wsq(Code,'rt_last');   % æœŸè´§æœ€æ–°ä»·æ ¼
 Price = 2661;
-%Rate  = w.wsq('CGB1Y.WI','rt_last')/100; % SHIBORÀûÂÊ
+%Rate  = w.wsq('CGB1Y.WI','rt_last')/100; % SHIBORåˆ©ç‡
 Rate = 0.03;
 %[EstVol,GarchVol,SellVol,BuyVol] = EstVolatility(Code);
 
@@ -31,21 +31,21 @@ Rate = 0.03;
 PremiumVol = 0.27;
 %DiscountVol = (2-Premium)*min(GarchVol,BuyVol);
 DiscountVol = 0.27;
-%fprintf('ÀúÊ·¾ùÖµ¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',EstVol);
-%fprintf('GARCHÄ£ĞÍ¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',GarchVol);
+%fprintf('å†å²å‡å€¼ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',EstVol);
+%fprintf('GARCHæ¨¡å‹ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',GarchVol);
 
 % if strcmp(Side,'sellcall') || strcmp(Side,'sellput')
-%     fprintf('Âô³öÆÚÈ¨Ëù¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',SellVol);
-%     fprintf('Âô³öÆÚÈ¨Ê±¶¨¼ÛËùÊ¹ÓÃ²¨¶¯ÂÊÎª %f\n\n',PremiumVol);
+%     fprintf('å–å‡ºæœŸæƒæ‰€ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',SellVol);
+%     fprintf('å–å‡ºæœŸæƒæ—¶å®šä»·æ‰€ä½¿ç”¨æ³¢åŠ¨ç‡ä¸º %f\n\n',PremiumVol);
      Volatility = PremiumVol;
      EstVol = 0.27;
 % elseif strcmp(Side,'buycall') || strcmp(Side,'buyput')
-%     fprintf('ÂòÈëÆÚÈ¨Ëù¹À¼ÆµÄ²¨¶¯ÂÊÎª %f\n',BuyVol);
-%     fprintf('ÂòÈëÆÚÈ¨Ê±¶¨¼ÛËùÊ¹ÓÃ²¨¶¯ÂÊÎª %f\n\n',DiscountVol);
+%     fprintf('ä¹°å…¥æœŸæƒæ‰€ä¼°è®¡çš„æ³¢åŠ¨ç‡ä¸º %f\n',BuyVol);
+%     fprintf('ä¹°å…¥æœŸæƒæ—¶å®šä»·æ‰€ä½¿ç”¨æ³¢åŠ¨ç‡ä¸º %f\n\n',DiscountVol);
 %     Volatility = DiscountVol;
 % end
 
-%% Âß¼­ÅĞ¶Ï
+%% é€»è¾‘åˆ¤æ–­
 if Type == 1
     [CallPrice,PutPrice] = blsprice(Price, Strike, Rate, Time, Volatility,Yield);
     if strcmp(Side,'buycall') || strcmp(Side,'sellcall')
@@ -53,7 +53,7 @@ if Type == 1
     elseif strcmp(Side,'buyput') || strcmp(Side,'sellput')
         OurPrice = PutPrice;
     end
-    fprintf('ÎÒÃÇ¶Ô¸ÃÅ·Ê½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',OurPrice);
+    fprintf('æˆ‘ä»¬å¯¹è¯¥æ¬§å¼æœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',OurPrice);
     
     [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
     = BS_GreekLetters(Price,Strike,Rate,Time,EstVol,Yield);
@@ -65,7 +65,7 @@ elseif Type == 2
     elseif strcmp(Side,'buyput') || strcmp(Side,'sellput')
         OurPrice = AmePutPrice;
     end
-    fprintf('ÎÒÃÇ¶Ô¸ÃÃÀÊ½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f£¬Prob = %f\n',OurPrice,Prob);
+    fprintf('æˆ‘ä»¬å¯¹è¯¥ç¾å¼æœŸæƒçš„å®šä»·ä¸ºï¼š%fï¼ŒProb = %f\n',OurPrice,Prob);
     
     [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
     = BS_GreekLetters(Price,Strike,Rate,Time,EstVol,Yield);
@@ -77,8 +77,8 @@ elseif Type == 3
     elseif strcmp(Side,'buyput') || strcmp(Side,'sellput')
         [AsianPrice,Var,UP] = Asian_improve(Price,Strike,Rate,Time,Volatility,0);
     end
-    fprintf('ÎÒÃÇ¶Ô¸ÃÑÇÊ½ÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',AsianPrice);
-    fprintf('ÑÇÊ½ÆÚÈ¨¼Û¸ñµÄ·½²îÎª %f  0.95ÖÃĞÅÇø¼äµÄÆÚÈ¨¼Û¸ñÉÏÏÂ½çÎª[%f, %f]\n ',Var,UP);
+    fprintf('æˆ‘ä»¬å¯¹è¯¥äºšå¼æœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',AsianPrice);
+    fprintf('äºšå¼æœŸæƒä»·æ ¼çš„æ–¹å·®ä¸º %f  0.95ç½®ä¿¡åŒºé—´çš„æœŸæƒä»·æ ¼ä¸Šä¸‹ç•Œä¸º[%f, %f]\n ',Var,UP);
     
    [CallDelta,PutDelta,Gamma,CallTheta,PutTheta,Vega,CallRho,PutRho] ...
    = AsianGreeksLevy(Price,Strike,EstVol,Rate,Settle,ExerciseDates);
@@ -92,14 +92,14 @@ elseif Type == 4
         OurPrice = BinPut;
         pS = pPut;
     end
-    fprintf('ÎÒÃÇ¶Ô¸Ã¶şÔªÆÚÈ¨µÄ¶¨¼ÛÎª£º%f\n',OurPrice);
-    fprintf('ÆÚÈ¨¼Û¸ñ/±êµÄ¼Û¸ñ = %f\n',pS);
+    fprintf('æˆ‘ä»¬å¯¹è¯¥äºŒå…ƒæœŸæƒçš„å®šä»·ä¸ºï¼š%f\n',OurPrice);
+    fprintf('æœŸæƒä»·æ ¼/æ ‡çš„ä»·æ ¼ = %f\n',pS);
     
     [CallDelta,PutDelta,CallGamma,PutGamma,CallTheta,PutTheta,CallVega,PutVega,CallRho,PutRho] = ...
      Bin_GreekLetters( Price,pCStrike,pPStrike,Rate,pCash,EstVol,SettlePrice,ExerciseDates,Yield);
     
 else
-    msgbox('ÆÚÈ¨ÀàĞÍÊäÈë´íÎó£¡');
+    msgbox('æœŸæƒç±»å‹è¾“å…¥é”™è¯¯ï¼');
 end
 
 if Type == 4 
@@ -128,7 +128,7 @@ if Type == 4
         fprintf('CallVega: %f\n',-CallVega);
         fprintf('CallRho: %f\n',-CallRho);
     else
-        error('½»Ò×·½ÏòÊäÈë´íÎó£¡');
+        error('äº¤æ˜“æ–¹å‘è¾“å…¥é”™è¯¯ï¼');
     end
 else 
     if strcmp(Side,'sellput') 
@@ -156,6 +156,6 @@ else
         fprintf('Vega: %f\n',-abs(Vega));
         fprintf('PutRho: %f\n',-abs(CallRho));
     else
-        error('½»Ò×·½ÏòÊäÈë´íÎó£¡');
+        error('äº¤æ˜“æ–¹å‘è¾“å…¥é”™è¯¯ï¼');
     end
 end
