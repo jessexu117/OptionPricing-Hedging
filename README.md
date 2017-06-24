@@ -1,11 +1,11 @@
 # OptionPricing-Hedging
-@author: Jesse Xu
-@email: jessexu117@outlook.com
+###### @author: Jesse Xu
+###### @email: jessexu117@outlook.com
 
-Written with MATLAB
-Data is from Wind Quant API
-Real-time Pricing and Hedging with real-time data from Wind
-Usually designed for OTC Pricing and Hedging
+###### Written with MATLAB
+###### Data is from Wind Quant API\\
+###### Real-time Pricing and Hedging with real-time data from Wind\\
+###### Usually designed for OTC Pricing and Hedging\\
 
 ### Option Pricing: 
 1. European Option: BS model
